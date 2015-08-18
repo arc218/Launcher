@@ -6,6 +6,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *エラー処理関連
+ */
 public class ErrorUtil {
 
 	private static final String PATH = "src/log.xml";
@@ -13,6 +16,7 @@ public class ErrorUtil {
 	/**
 	 * 例外を{@code ErrorUtil.path}に出力します
 	 * @param e - Exception
+	 * @see www.ytp.ne.jp/tech/java/sineruka/jdk14logging.html
 	 */
 	public static void printLog(Exception e) {
 		Logger logger = Logger.getLogger("");
@@ -30,6 +34,11 @@ public class ErrorUtil {
 		}
 		e.printStackTrace();
 	}
+
+	/**
+	 * 相対パスを絶対パスに変換して表示する
+	 * @param relativePath - 相対パス
+	 */
 
 	public static void pathConfiguration(String relativePath) {
 		File file = new File(relativePath);

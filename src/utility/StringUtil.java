@@ -1,13 +1,21 @@
 package utility;
 
+/**
+ *主に定数を管理するUtil
+ */
 public class StringUtil {
 
+	/** タイトル */
 	public static final String TITLE = "Launcher";
 
-	public static final String ENTRY_PATH = "form/Title.fxml";
+	/** スタート画面のパス */
+	//public static final String ENTRY_PATH = "scene/menu/Menu.fxml";
+	public static final String ENTRY_PATH = "scene/title/Title.fxml";
 
+	/** 横の長さ */
 	public static final int SCENE_WIDTH = 800;
 
+	/** 縦の長さ */
 	public static final int SCENE_HEIGHT = 600;
 
 }
