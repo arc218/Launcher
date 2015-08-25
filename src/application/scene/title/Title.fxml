@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,20 +9,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="138.0" minWidth="100.0" prefHeight="249.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.scene.title.TitleController">
+<AnchorPane fx:id="basePane" minHeight="138.0" minWidth="100.0" prefHeight="249.0" prefWidth="320.0" stylesheets="@../../css/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.scene.title.TitleController">
     <children>
       <VBox layoutX="30.0" layoutY="27.0" prefHeight="200.0" prefWidth="250.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
          <children>
-            <AnchorPane prefHeight="40.0">
+            <AnchorPane prefHeight="40.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Text fx:id="workName" strokeType="OUTSIDE" strokeWidth="0.0" text="workName" />
-                  <Text fx:id="creatorName" strokeType="OUTSIDE" strokeWidth="0.0" text="creatorName" />
-                  <Text fx:id="descriptionName" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+                  <Text fx:id="creatorName" strokeType="OUTSIDE" strokeWidth="0.0" text="creatorName">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Text>
                </children>
-            </AnchorPane>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fx:id="descriptionName" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
             <HBox alignment="TOP_RIGHT" prefHeight="31.0" prefWidth="292.0" spacing="14.0">
                <children>
-                   <Button fx:id="defButton" onAction="#handleDef" prefHeight="40.0" prefWidth="100.0" text="決定" />
+                   <Button fx:id="defButton" onAction="#handleEnter" prefHeight="40.0" prefWidth="100.0" text="決定" />
                   <Button fx:id="upButton" mnemonicParsing="false" onAction="#handleUp" text="上" />
                   <Button fx:id="downButton" mnemonicParsing="false" onAction="#handleDown" text="下" />
                </children>

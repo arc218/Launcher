@@ -11,6 +11,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+/**
+ * インスタンスは作れないので、getInstance()で取得する
+ */
 public class XMLUtil {
 
 	private static XMLUtil xmlUtil = new XMLUtil();
@@ -29,10 +32,16 @@ public class XMLUtil {
 		}
 	}
 
+	/**
+	 * XMLUtilのインスタンスを返す
+	 */
 	public static XMLUtil getInstance() {
 		return xmlUtil;
 	}
 
+	/**
+	 * work.xmlを変換したものを返す
+	 */
 	public Element getRoot() {
 		return root;
 	}

@@ -2,15 +2,43 @@
 	<work>
 		<name>name1</name>
 		<creator>creator1</creator>
-		<image>image1</image>
-		<description>description1</description>
-		<path>path1</path>
+		<image>works/nc004.png</image>
+		<description>description1(3行くらい)</description>
+		<path>src/works</path>
 	</work>
 	<work>
 		<name>name2</name>
 		<creator>creator2</creator>
-		<image>image2</image>
-		<description>description2</description>
-		<path>path2</path>
+		<image>works/689368.png</image>
+		<description>description2(3行くらい)</description>
+		<path>src/works</path>
+	</work>
+	<work>
+		<name>name3</name>
+		<creator>creator3</creator>
+		<image>works/nc004.png</image>
+		<description>description3(3行くらい)</description>
+		<path>src/works</path>
+	</work>
+	<work>
+		<name>name4</name>
+		<creator>creator4</creator>
+		<image>works/689368.png</image>
+		<description>description4(3行くらい)</description>
+		<path>src/works</path>
+	</work>
+	<work>
+		<name>name5</name>
+		<creator>creator5</creator>
+		<image>works/nc004.png</image>
+		<description>description5(3行くらい)</description>
+		<path>src/works</path>
+	</work>
+		<work>
+		<name>name6</name>
+		<creator>creator6</creator>
+		<image>works/689368.png</image>
+		<description>description6(3行くらい)</description>
+		<path>src/works</path>
 	</work>
 </root>
