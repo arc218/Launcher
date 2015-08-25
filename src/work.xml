@@ -1,0 +1,16 @@
+<root>
+	<work>
+		<name>name1</name>
+		<creator>creator1</creator>
+		<image>image1</image>
+		<description>description1</description>
+		<path>path1</path>
+	</work>
+	<work>
+		<name>name2</name>
+		<creator>creator2</creator>
+		<image>image2</image>
+		<description>description2</description>
+		<path>path2</path>
+	</work>
+</root>

@@ -18,4 +18,5 @@ public class StringUtil {
 	/** 縦の長さ */
 	public static final int SCENE_HEIGHT = 600;
 
+	public static final String WORK_PATH = "src/work.xml";
 }
