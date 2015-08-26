@@ -34,7 +34,7 @@
 		<description>説明5(3行くらい)</description>
 		<path>src/works/5</path>
 	</work>
-		<work>
+	<work>
 		<name>作品名6</name>
 		<creator>製作者6</creator>
 		<image>works/6/image6.jpg</image>

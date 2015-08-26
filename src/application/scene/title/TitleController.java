@@ -72,13 +72,11 @@ public class TitleController implements Initializable {
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder("open", hashMap.get(pivot + 1).get("path"));
 			Process process = processBuilder.start();
-			//			process.waitFor();
-			//			process.destroy();
-		} catch (IOException e) {
+			process.waitFor();
+			process.destroy();
+		} catch (IOException | InterruptedException e) {
 			ErrorUtil.printLog(e);
-		} //catch (InterruptedException e) {
-			//			e.printStackTrace();
-			//		}
+		}
 	}
 
 	@FXML
@@ -87,11 +85,14 @@ public class TitleController implements Initializable {
 	}
 
 	private void changeOverFile() {
-		System.out.println("bef:" + pivot);
-		pivot = (pivot + size - 1) % size;
-		System.out.println("aft:" + pivot);
-		listView.getSelectionModel().select(pivot + 1);
+		if (pivot == 0) {
+			listView.getSelectionModel().select(1);
+		} else {
+			pivot = (pivot + size - 1) % size;
+			listView.getSelectionModel().select(pivot + 1);
+		}
 		initField();
+
 		//		int index = listView.getSelectionModel().getSelectedIndex();
 		//		System.out.println(listRecords.size());
 	}
@@ -153,9 +154,18 @@ public class TitleController implements Initializable {
 	private void initListView() {
 		listView.setItems(listRecords);
 		listView.getSelectionModel().selectFirst();
-		listView.getSelectionModel().selectedItemProperty().addListener(listener -> {
-			pivot = listView.getSelectionModel().getSelectedIndex();
-			initField();
+		//		listView.getSelectionModel().selectedItemProperty().addListener(listener -> {
+		//			pivot = listView.getSelectionModel().getSelectedIndex();
+		//			initField();
+		//		});
+
+		listView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				openDirectory();
+			} else {
+				pivot = listView.getSelectionModel().getSelectedIndex();
+				initField();
+			}
 		});
 	}
 
@@ -179,25 +189,31 @@ public class TitleController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void initField() {
+		StringUtil.printStackTrace();
 		HashMap<String, String> map = hashMap.get(pivot + 1);
-		workName.setText("作品名:" + map.get("name"));
-		creatorName.setText("製作者:" + map.get("creator"));
-		String descriptionValue = map.get("description");
-		int limit = 15;//1行に何文字まで表示するか
-		if (descriptionValue.length() < limit) {
-			descriptionName.setText(descriptionValue);
-		} else {
-			String crlf = System.getProperty("line.separator");
-			StringJoiner joiner = new StringJoiner(crlf);
-			for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
-				joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
+		if (map != null) {
+			workName.setText("作品名:" + map.get("name"));
+			creatorName.setText("製作者:" + map.get("creator"));
+			String descriptionValue = map.get("description");
+			int limit = 15;//1行に何文字まで表示するか
+			if (descriptionValue.length() < limit) {
+				descriptionName.setText(descriptionValue);
+			} else {
+				String crlf = System.getProperty("line.separator");
+				StringJoiner joiner = new StringJoiner(crlf);
+				for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
+					joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
+				}
+				descriptionName.setText(joiner.toString());
 			}
-			descriptionName.setText(joiner.toString());
+			imageView.setPreserveRatio(true);
+			imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
+			imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
+			imageView.setImage(new Image(map.get("image")));
+		} else {
+			System.out.println("error:" + pivot);
+			//再現方法:1にカーソルがあるが、実際は6が表示されているときに6を開き、その後下に行こうとすると発生する
 		}
-		//imageView.setPreserveRatio(true);
-		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
-		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
-		imageView.setImage(new Image(map.get("image")));
 	}
 
 	/**

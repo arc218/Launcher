@@ -26,6 +26,15 @@ public class StringUtil {
 		System.out.println(System.getProperty("user.dir"));
 	}
 
+	/**
+	 * スタックトレースを表示する
+	 */
+	public static void printStackTrace() {
+		StackTraceElement ste = Thread.currentThread().getStackTrace()[2];
+		System.out.println("呼び出し元：" + ste.getClassName() + "#" + ste.getMethodName() + ":" + ste.getLineNumber());
+
+	}
+
 	public static final int IMAGE_WIDTH = 300;
 
 	public static final int IMAGE_HEIGHT = 400;
