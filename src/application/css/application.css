@@ -15,14 +15,11 @@
 }
 
 .button:hover {
-    -fx-background-color: #dcdcdc;
+    -fx-background-color: #647dff;
 }
 .button:pressed {
     -fx-background-color: black;
     -fx-border-color: white;
-}
-
-.hbox{
 }
 
 .title-container{
@@ -34,9 +31,6 @@
 	-fx-border-color: red;
 }
 
-.description{
-}
-
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
     -fx-background-insets: 0, 1, 2;
@@ -45,6 +39,10 @@
 }
 
 .list-view{
+}
+
+.information-container{
+	-fx-padding: 20px;
 }
 
 

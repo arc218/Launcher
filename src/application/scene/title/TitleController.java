@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.StringJoiner;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -86,7 +87,9 @@ public class TitleController implements Initializable {
 	}
 
 	private void changeOverFile() {
+		System.out.println("bef:" + pivot);
 		pivot = (pivot + size - 1) % size;
+		System.out.println("aft:" + pivot);
 		listView.getSelectionModel().select(pivot + 1);
 		initField();
 		//		int index = listView.getSelectionModel().getSelectedIndex();
@@ -177,9 +180,20 @@ public class TitleController implements Initializable {
 	 */
 	private void initField() {
 		HashMap<String, String> map = hashMap.get(pivot + 1);
-		workName.setText(map.get("name"));
-		creatorName.setText(map.get("creator"));
-		descriptionName.setText(map.get("description"));
+		workName.setText("作品名:" + map.get("name"));
+		creatorName.setText("製作者:" + map.get("creator"));
+		String descriptionValue = map.get("description");
+		int limit = 15;//1行に何文字まで表示するか
+		if (descriptionValue.length() < limit) {
+			descriptionName.setText(descriptionValue);
+		} else {
+			String crlf = System.getProperty("line.separator");
+			StringJoiner joiner = new StringJoiner(crlf);
+			for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
+				joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
+			}
+			descriptionName.setText(joiner.toString());
+		}
 		//imageView.setPreserveRatio(true);
 		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
 		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);

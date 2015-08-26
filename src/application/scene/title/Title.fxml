@@ -16,30 +16,20 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="title-container">
                <children>
-                  <Text fx:id="workName" strokeType="OUTSIDE" strokeWidth="0.0" text="workName" />
-                  <Text fx:id="creatorName" strokeType="OUTSIDE" strokeWidth="0.0" text="creatorName">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Text>
+                   <Button fx:id="defButton" onAction="#handleEnter" prefHeight="40.0" prefWidth="100.0" text="開く" />
+                  <VBox prefHeight="119.0" prefWidth="143.0" styleClass="information-container">
+                     <children>
+                        <Text fx:id="workName" strokeType="OUTSIDE" strokeWidth="0.0" text="workName" />
+                        <Text fx:id="creatorName" strokeType="OUTSIDE" strokeWidth="0.0" text="creatorName" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 50;" styleClass="hbox">
                <children>
                   <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" />
                   <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="description-container">
-                     <children>
-                        <Text fx:id="descriptionName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="description" />
-                     </children>
-                  </Pane>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_RIGHT" prefHeight="31.0" prefWidth="292.0" spacing="14.0">
-               <children>
-                   <Button fx:id="defButton" onAction="#handleEnter" prefHeight="40.0" prefWidth="100.0" text="決定" />
-                  <!-- <Button fx:id="upButton" mnemonicParsing="false" onAction="#handleUp" text="上" />
-                  <Button fx:id="downButton" mnemonicParsing="false" onAction="#handleDown" text="下" /> -->
+                  <Text fx:id="descriptionName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="description" />
                </children>
             </HBox>
          </children>
