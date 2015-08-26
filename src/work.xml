@@ -1,44 +1,44 @@
 <root>
 	<work>
-		<name>name1</name>
-		<creator>creator1</creator>
-		<image>works/nc004.png</image>
-		<description>description1(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名1</name>
+		<creator>製作者1</creator>
+		<image>works/1/image1.jpg</image>
+		<description>説明1(3行くらい)</description>
+		<path>src/works/1</path>
 	</work>
 	<work>
-		<name>name2</name>
-		<creator>creator2</creator>
-		<image>works/689368.png</image>
-		<description>description2(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名2</name>
+		<creator>製作者2</creator>
+		<image>works/2/image2.jpg</image>
+		<description>説明2(3行くらい)</description>
+		<path>src/works/2</path>
 	</work>
 	<work>
-		<name>name3</name>
-		<creator>creator3</creator>
-		<image>works/nc004.png</image>
-		<description>description3(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名3</name>
+		<creator>製作者3</creator>
+		<image>works/3/image3.jpg</image>
+		<description>説明3(3行くらい)</description>
+		<path>src/works/3</path>
 	</work>
 	<work>
-		<name>name4</name>
-		<creator>creator4</creator>
-		<image>works/689368.png</image>
-		<description>description4(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名4</name>
+		<creator>製作者4</creator>
+		<image>works/4/image4.jpg</image>
+		<description>説明4(3行くらい)</description>
+		<path>src/works/4</path>
 	</work>
 	<work>
-		<name>name5</name>
-		<creator>creator5</creator>
-		<image>works/nc004.png</image>
-		<description>description5(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名5</name>
+		<creator>製作者5</creator>
+		<image>works/5/image5.jpg</image>
+		<description>説明5(3行くらい)</description>
+		<path>src/works/5</path>
 	</work>
 		<work>
-		<name>name6</name>
-		<creator>creator6</creator>
-		<image>works/689368.png</image>
-		<description>description6(3行くらい)</description>
-		<path>src/works</path>
+		<name>作品名6</name>
+		<creator>製作者6</creator>
+		<image>works/6/image6.jpg</image>
+		<description>説明6(3行くらい)</description>
+		<path>src/works/6</path>
 	</work>
 </root>

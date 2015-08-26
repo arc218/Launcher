@@ -9,16 +9,20 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import utility.ErrorUtil;
+import utility.StringUtil;
 import utility.XMLUtil;
 
 public class TitleController implements Initializable {
@@ -47,6 +51,9 @@ public class TitleController implements Initializable {
 	@FXML
 	private AnchorPane basePane;
 
+	@FXML
+	private ListView<String> listView;
+
 	private Element root;
 
 	private HashMap<Integer, HashMap<String, String>> hashMap;
@@ -55,6 +62,8 @@ public class TitleController implements Initializable {
 
 	private int size = 0;
 
+	private ObservableList<String> listRecords = FXCollections.observableArrayList();
+
 	/**
 	 * 現在該当するディレクトリを開く
 	 */
@@ -62,24 +71,36 @@ public class TitleController implements Initializable {
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder("open", hashMap.get(pivot + 1).get("path"));
 			Process process = processBuilder.start();
-			process.waitFor();
-			process.destroy();
+			//			process.waitFor();
+			//			process.destroy();
 		} catch (IOException e) {
 			ErrorUtil.printLog(e);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		} //catch (InterruptedException e) {
+			//			e.printStackTrace();
+			//		}
 	}
 
 	@FXML
 	public void handleUp(ActionEvent event) {
-		pivot = (pivot + 1) % size;
+		changeOverFile();
+	}
+
+	private void changeOverFile() {
+		pivot = (pivot + size - 1) % size;
+		listView.getSelectionModel().select(pivot + 1);
 		initField();
+		//		int index = listView.getSelectionModel().getSelectedIndex();
+		//		System.out.println(listRecords.size());
 	}
 
 	@FXML
 	public void handleDown(ActionEvent event) {
-		pivot = (pivot + size - 1) % size;
+		changeUnderFile();
+	}
+
+	private void changeUnderFile() {
+		pivot = (pivot + 1) % size;
+		listView.getSelectionModel().select(pivot - 1);
 		initField();
 	}
 
@@ -120,22 +141,33 @@ public class TitleController implements Initializable {
 		pivot = 0;
 		initField();
 		initKeyConfig();
+		initListView();
+	}
+
+	/**
+	 * ListViewの初期化処理
+	 */
+	private void initListView() {
+		listView.setItems(listRecords);
+		listView.getSelectionModel().selectFirst();
+		listView.getSelectionModel().selectedItemProperty().addListener(listener -> {
+			pivot = listView.getSelectionModel().getSelectedIndex();
+			initField();
+		});
 	}
 
 	/**
 	 * キー情報の初期化
 	 */
 	private void initKeyConfig() {
-		basePane.setOnKeyPressed(event -> {
+		listView.setOnKeyPressed(event -> {
 			KeyCode code = event.getCode();
 			if (KeyCode.ENTER.equals(code)) {
 				openDirectory();
 			} else if (KeyCode.DOWN.equals(code)) {
-				pivot = (pivot + size - 1) % size;
-				initField();
+				changeUnderFile();
 			} else if (KeyCode.UP.equals(code)) {
-				pivot = (pivot + 1) % size;
-				initField();
+				changeOverFile();
 			}
 		});
 	}
@@ -148,6 +180,9 @@ public class TitleController implements Initializable {
 		workName.setText(map.get("name"));
 		creatorName.setText(map.get("creator"));
 		descriptionName.setText(map.get("description"));
+		//imageView.setPreserveRatio(true);
+		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
+		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
 		imageView.setImage(new Image(map.get("image")));
 	}
 
@@ -158,6 +193,10 @@ public class TitleController implements Initializable {
 		for (String name : args) {
 			if (personNode.getNodeName().equals(name)) {
 				dataMap.put(name, personNode.getTextContent());
+
+				if (personNode.getNodeName().equals("name")) {
+					listRecords.add(personNode.getTextContent());
+				}
 			}
 		}
 	}

@@ -10,7 +10,30 @@
 .button:hover {
     -fx-background-color: #dcdcdc;
 }
-.circle-button:pressed {
+.button:pressed {
     -fx-background-color: black;
     -fx-border-color: white;
 }
+
+#text{
+	 -fx-background-color: #dcdcdc;
+}
+
+.hbox{
+    
+}
+
+.list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background: -fx-accent;
+    /* -fx-text-fill: -fx-selection-bar-text;  */
+    -fx-text-fill: red;
+}
+
+.list-view{
+}
+
+
+
+

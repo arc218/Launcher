@@ -21,11 +21,13 @@ public class StringUtil {
 	/** 構造ファイルのパス	 */
 	public static final String WORK_PATH = "src/work.xml";
 
-	/**
-	 * JVMの作業ディレクトリを返す
-	 */
+	/** JVMの作業ディレクトリを返す */
 	public static void getCurrentDirectory() {
 		System.out.println(System.getProperty("user.dir"));
 	}
+
+	public static final int IMAGE_WIDTH = 300;
+
+	public static final int IMAGE_HEIGHT = 400;
 
 }
