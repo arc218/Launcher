@@ -1,3 +1,10 @@
+.pane{
+	-fx-font-size: 14px;
+	-fx-font-weight: 100;
+	-fx-background-color:#e6e8ea;
+	-fx-underline: true ;
+}
+
 .button{
     -fx-pref-width: 4.0em;
     -fx-pref-height: 4.0em;
@@ -15,19 +22,25 @@
     -fx-border-color: white;
 }
 
-#text{
-	 -fx-background-color: #dcdcdc;
+.hbox{
 }
 
-.hbox{
-    
+.title-container{
+	-fx-padding: 20px;
+}
+
+.description-container{
+	-fx-font-size: 22px;
+	-fx-border-color: red;
+}
+
+.description{
 }
 
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
     -fx-background-insets: 0, 1, 2;
     -fx-background: -fx-accent;
-    /* -fx-text-fill: -fx-selection-bar-text;  */
     -fx-text-fill: red;
 }
 
