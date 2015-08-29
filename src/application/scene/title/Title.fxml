@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -23,6 +24,7 @@
                         <Text fx:id="creatorName" strokeType="OUTSIDE" strokeWidth="0.0" text="creatorName" />
                      </children>
                   </VBox>
+                  <Box fx:id="imageBox" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 50;" styleClass="hbox">
@@ -34,5 +36,6 @@
             </HBox>
          </children>
       </VBox>
+      <PerspectiveCamera fx:id="camera" />
     </children>
 </AnchorPane>

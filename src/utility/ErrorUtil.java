@@ -11,28 +11,40 @@ import java.util.logging.Logger;
  */
 public class ErrorUtil {
 
-	private static final String PATH = "src/log.xml";
+	private static final String PATH = "../log.xml";
 
 	/**
 	 * 例外を{@code ErrorUtil.path}に出力します
 	 * @param e - Exception
 	 * @see www.ytp.ne.jp/tech/java/sineruka/jdk14logging.html
 	 */
-	public static void printLog(Exception e) {
+	public void printLog(Exception e) {
 		Logger logger = Logger.getLogger("");
 		FileHandler fh = null;
 		try {
-			fh = new FileHandler(PATH, true);
-			fh.setFormatter(new java.util.logging.XMLFormatter());
-			logger.addHandler(fh);
-			logger.log(Level.SEVERE, e.getClass().toString(), e);
+			fh = new FileHandler(this.getClass().getResource(PATH).toString(), true);
+			if (fh != null) {
+				fh.setFormatter(new java.util.logging.XMLFormatter());
+				logger.addHandler(fh);
+				logger.log(Level.SEVERE, e.getClass().toString(), e);
+			}
 		} catch (SecurityException | IOException error) {
 			//このエラーが起きるとlogに出力できない
 			error.printStackTrace();
 		} finally {
-			fh.close();
+			if (fh != null) {
+				fh.close();
+			}
 		}
 		e.printStackTrace();
+	}
+
+	private ErrorUtil() {
+
+	}
+
+	public static ErrorUtil getInstance() {
+		return new ErrorUtil();
 	}
 
 	/**
@@ -45,4 +57,5 @@ public class ErrorUtil {
 		String absolutePath = file.getAbsolutePath();
 		System.out.println("File：" + absolutePath);
 	}
+
 }

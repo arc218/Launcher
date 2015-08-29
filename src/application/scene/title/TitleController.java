@@ -15,14 +15,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Box;
 import javafx.scene.text.Text;
-import utility.ErrorUtil;
 import utility.StringUtil;
 import utility.XMLUtil;
 
@@ -55,6 +56,12 @@ public class TitleController implements Initializable {
 	@FXML
 	private ListView<String> listView;
 
+	@FXML
+	private Box imageBox;
+
+	@FXML
+	private PerspectiveCamera camera;
+
 	private Element root;
 
 	private HashMap<Integer, HashMap<String, String>> hashMap;
@@ -75,7 +82,7 @@ public class TitleController implements Initializable {
 			process.waitFor();
 			process.destroy();
 		} catch (IOException | InterruptedException e) {
-			ErrorUtil.printLog(e);
+			//ErrorUtil.getInstance().printLog(e);
 		}
 	}
 
@@ -189,7 +196,7 @@ public class TitleController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void initField() {
-		StringUtil.printStackTrace();
+		//StringUtil.printStackTrace();
 		HashMap<String, String> map = hashMap.get(pivot + 1);
 		if (map != null) {
 			workName.setText("作品名:" + map.get("name"));
@@ -210,6 +217,14 @@ public class TitleController implements Initializable {
 			imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
 			imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
 			imageView.setImage(new Image(map.get("image")));
+			//TODO:3D関係
+			//			Main.imageBox = new Box(100.0, 100.0, 100.0);
+			//
+			//			imageBox = Main.imageBox;
+			//
+			//			PhongMaterial material = new PhongMaterial();
+			//			material.setDiffuseMap(new Image(map.get("image")));
+			//			imageBox.setMaterial(material);
 		} else {
 			System.out.println("error:" + pivot);
 			//再現方法:1にカーソルがあるが、実際は6が表示されているときに6を開き、その後下に行こうとすると発生する
