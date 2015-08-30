@@ -1,0 +1,45 @@
+.pane{
+	-fx-font-size: 14px;
+	-fx-font-weight: 100;
+	-fx-background-color:#e6e8ea;
+	-fx-underline: true ;
+}
+
+.button{
+    -fx-pref-width: 4.0em;
+    -fx-pref-height: 4.0em;
+    -fx-background-radius: 2.0em;
+    -fx-border-radius: 2.0em;
+    -fx-border-color: black;
+    -fx-border-width: 2.0px;
+}
+
+.button:hover {
+    -fx-background-color: #647dff;
+}
+.button:pressed {
+    -fx-background-color: white;
+}
+
+.title-container{
+	-fx-padding: 20px;
+}
+
+.list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background: -fx-accent;
+    -fx-text-fill: white;
+}
+
+.information-container{
+	-fx-padding: 20px;
+}
+
+.imageView{
+	-fx-padding: 120px;
+}
+
+.txt{
+	-fx-font-size: 17px;
+}

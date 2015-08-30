@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="basePane" maxHeight="240.0" maxWidth="320.0" minHeight="75.0" minWidth="100.0" prefHeight="240.0" prefWidth="320.0" styleClass="pane" stylesheets="@../../css/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.scene.menu.MenuController">
+	<!-- TODO Add Nodes -->
+	<Button mnemonicParsing="false" text="Init" />
+</AnchorPane>
+
