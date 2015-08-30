@@ -1,6 +1,7 @@
 package application.scene.menu;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -22,10 +23,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import utility.DataUtil;
+import utility.ErrorUtil;
 import utility.PlatformUtil;
 import utility.StringUtil;
 import utility.XMLUtil;
@@ -51,10 +53,6 @@ public class MenuController implements Initializable {
 	/** 画像を読み込むビュー */
 	@FXML
 	private ImageView imageView;
-
-	/** ベースパネル */
-	@FXML
-	private AnchorPane basePane;
 
 	/** 作品リスト */
 	@FXML
@@ -88,7 +86,6 @@ public class MenuController implements Initializable {
 			listView.getSelectionModel().select(pivot + 1);
 		}
 		initField();
-		//		int index = listView.getSelectionModel().getSelectedIndex();
 	}
 
 	@FXML
@@ -114,22 +111,25 @@ public class MenuController implements Initializable {
 	 * 現在該当するディレクトリを開く
 	 */
 	private void openDirectory() {
+		//現在のディレクトリのパス
+		String currentDirectory = DataUtil.getCurrentDirectory();
+		//works直下のいずれかの作品名
+		String fileName = hashMap.get(pivot + 1).get("path");
+		//選択した作品のパス
+		String path = new StringBuilder(currentDirectory).append("/works/").append(fileName).toString();
+		ProcessBuilder processBuilder = new ProcessBuilder("open", path);
 		try {
-			ProcessBuilder processBuilder = new ProcessBuilder("open", hashMap.get(pivot + 1).get("path"));
 			Process process = processBuilder.start();
 			process.waitFor();
 			process.destroy();
 		} catch (IOException | InterruptedException e) {
-			//ErrorUtil.getInstance().printLog(e);
+			ErrorUtil.getInstance().printLog(e);
 		}
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO:テスト出力
-		System.out.println("controller-initialize");
-		//
-		//		//root = XMLUtil.getInstance().getRoot();
 		root = XMLUtil.getInstance().getRoot();
 
 		hashMap = new HashMap<Integer, HashMap<String, String>>();
@@ -159,8 +159,6 @@ public class MenuController implements Initializable {
 
 		size = hashMap.size();
 		pivot = 0;
-		//TODO:テスト出力
-		System.out.println("initField");
 		initField();
 		initKeyConfig();
 		initListView();
@@ -168,20 +166,12 @@ public class MenuController implements Initializable {
 		imageView.setPreserveRatio(true);
 		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
 		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
-		//	使用できるフォントの表示
-		//		List<String> string = Font.getFamilies();
-		//		for (String string2 : string) {
-		//			System.out.println(string2);
-		//		}
 
 		if (PlatformUtil.isMac()) {
 			descriptionText.setFont(Font.font("YuGothic"));
 		} else if (PlatformUtil.isWindows()) {
 			descriptionText.setFont(Font.font("Meiryo"));
 		}
-
-		//TODO:テスト出力
-		System.out.println("init fin");
 	}
 
 	/**
@@ -190,11 +180,6 @@ public class MenuController implements Initializable {
 	private void initListView() {
 		listView.setItems(listRecords);
 		listView.getSelectionModel().selectFirst();
-		//		listView.getSelectionModel().selectedItemProperty().addListener(listener -> {
-		//			pivot = listView.getSelectionModel().getSelectedIndex();
-		//			initField();
-		//		});
-
 		listView.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				openDirectory();
@@ -225,7 +210,6 @@ public class MenuController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void initField() {
-		//StringUtil.printStackTrace();
 		HashMap<String, String> map = hashMap.get(pivot + 1);
 		if (map != null) {
 			workName.setText("作品名:" + map.get("name"));
@@ -243,19 +227,6 @@ public class MenuController implements Initializable {
 				descriptionText.setText(joiner.toString());
 			}
 
-			//フェード関連の処理
-			//			imageView.setImage(new Image(split[0]));
-			//			FadeTransition fadeout = new FadeTransition(new Duration(500));
-			//			fadeout.setNode(imageView);
-			//			fadeout.setToValue(0.0);
-			//			fadeout.setOnFinished(event -> {
-			//				basePane.getChildren().remove(imageView);
-			//			});
-			//
-			//			FadeTransition fadein = new FadeTransition(new Duration(500));
-			//			fadein.setNode(imageView);
-			//			fadein.setToValue(1.0);
-
 			//画像のパスを分割
 			String[] split = map.get("image").split(",");
 			imageView.setImage(new Image(split[0]));
@@ -272,10 +243,13 @@ public class MenuController implements Initializable {
 			}), new KeyFrame(new Duration(3000), event -> {
 				imageView.setImage(new Image(split[0]));
 			}));
-			//無限ループ
+			//アニメーションの無限ループ
 			timeline.setCycleCount(Timeline.INDEFINITE);
-
-			timeline.play();
+			boolean debug = ManagementFactory.getRuntimeMXBean().getInputArguments()
+					.toString().contains("-agentlib:jdwp");
+			if (debug != true) {
+				timeline.play();
+			}
 		} else {
 			System.out.println("error:" + pivot);
 			//			再現方法:1にカーソルがあるが、実際は6が表示されているときに6を開き、その後下に行こうとすると発生する
@@ -295,7 +269,7 @@ public class MenuController implements Initializable {
 					listRecords.add(personNode.getTextContent());
 				}
 				if (personNode.getNodeName().equals("image")) {
-					//TODO:全部の作品の画像数があっているかの確認(フィールドにパラメータを設置して対応)
+					//TODO:全部の作品の画像数があっているかの確認(フィールドにパラメータを設置して対応してもよい)
 				}
 			}
 		}

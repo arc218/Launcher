@@ -8,7 +8,7 @@ public class PlatformUtil {
 	 * OS名を小文字で取得します
 	 */
 	public static String getOSName() {
-		System.out.println(osName);
+		//System.out.println(osName);
 		return osName;
 		//http://www.atmarkit.co.jp/fjava/javatips/115java020.html
 	}
