@@ -3,43 +3,43 @@
 	<work>
 		<name>作品名1</name>
 		<creator>製作者1</creator>
-		<image>works/1/image1.jpg,works/2/image2.jpg,works/3/image3.jpg</image>
-		<description>111111しするですんて、どうにはいですでうあり。</description>
-		<path>1</path>
+		<image>works/Name1/Image/image1.jpg,works/Name1/Image/image5.jpg,works/Name1/Image/image6.jpg</image>
+		<description>111111</description>
+		<path>Name1</path>
 	</work>
 	<work>
 		<name>作品名2</name>
 		<creator>製作者2</creator>
-		<image>works/2/image2.jpg,works/3/image3.jpg,works/4/image4.jpg</image>
-		<description>222222しするですんて、どうにはいですでうあり。</description>
-		<path>2</path>
+		<image>works/Name2/Image/image1.jpg,works/Name2/Image/image2.jpg,works/Name2/Image/image6.jpg</image>
+		<description>222222</description>
+		<path>Name2</path>
 	</work>
 	<work>
 		<name>作品名3</name>
 		<creator>製作者3</creator>
-		<image>works/3/image3.jpg,works/4/image4.jpg,works/5/image5.jpg</image>
-		<description>333333333もお話しするですんて、どうにはいですでうあり。</description>
-		<path>3</path>
+		<image>works/Name3/Image/image1.jpg,works/Name3/Image/image2.jpg,works/Name3/Image/image3.jpg</image>
+		<description>333333333</description>
+		<path>Name3</path>
 	</work>
 	<work>
 		<name>作品名4</name>
 		<creator>製作者4</creator>
-		<image>works/4/image4.jpg,works/5/image5.jpg,works/6/image6.jpg</image>
-		<description>44444444話しするですんて、どうにはいですでうあり。</description>
-		<path>4</path>
+		<image>works/Name4/Image/image2.jpg,works/Name4/Image/image3.jpg,works/Name4/Image/image4.jpg</image>
+		<description>44444444</description>
+		<path>Name4</path>
 	</work>
 	<work>
 		<name>作品名5</name>
 		<creator>製作者5</creator>
-		<image>works/5/image5.jpg,works/6/image6.jpg,works/1/image1.jpg</image>
-		<description>55555555だきなにもお話しするですんて、どうにはいですでうあり。</description>
-		<path>5</path>
+		<image>works/Name5/Image/image3.jpg,works/Name5/Image/image4.jpg,works/Name5/Image/image5.jpg</image>
+		<description>55555555</description>
+		<path>Name5</path>
 	</work>
 	<work>
 		<name>作品名6</name>
 		<creator>製作者6</creator>
-		<image>works/6/image6.jpg,works/1/image1.jpg,works/2/image2.jpg</image>
-		<description>66666666どうにはいですでうあり。</description>
-		<path>6</path>
+		<image>works/Name6/Image/image4.jpg,works/Name6/Image/image5.jpg,works/Name6/Image/image6.jpg</image>
+		<description>66666666</description>
+		<path>Name6</path>
 	</work>
 </root>

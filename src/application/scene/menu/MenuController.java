@@ -1,7 +1,6 @@
 package application.scene.menu;
 
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -245,11 +244,7 @@ public class MenuController implements Initializable {
 			}));
 			//アニメーションの無限ループ
 			timeline.setCycleCount(Timeline.INDEFINITE);
-			boolean debug = ManagementFactory.getRuntimeMXBean().getInputArguments()
-					.toString().contains("-agentlib:jdwp");
-			if (debug != true) {
-				timeline.play();
-			}
+			timeline.play();
 		} else {
 			System.out.println("error:" + pivot);
 			//			再現方法:1にカーソルがあるが、実際は6が表示されているときに6を開き、その後下に行こうとすると発生する
