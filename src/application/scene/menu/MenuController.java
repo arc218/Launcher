@@ -262,6 +262,9 @@ public class MenuController implements Initializable {
 
 				if (personNode.getNodeName().equals("name")) {
 					listRecords.add(personNode.getTextContent());
+					/*TODO:nameが分かった段階でディレクトリがわかるので、works/name/Imgaeの中身をカンマ区切りで取得してdataMap.put("image", getItems);に変更する
+					 なのでsetData(...)呼び出し時のimageは消してよい work.xmlのimageタグも消して良い
+					 */
 				}
 				if (personNode.getNodeName().equals("image")) {
 					//TODO:全部の作品の画像数があっているかの確認(フィールドにパラメータを設置して対応してもよい)
