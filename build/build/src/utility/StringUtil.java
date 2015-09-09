@@ -27,6 +27,8 @@ public class StringUtil {
 	/** 構造ファイルのパス	 */
 	public static final String WORK_PATH = "/work.xml";
 
+	public static final String WORK_DIRECTORY_NAME = "works";
+
 	/**
 	 * 相対パスを絶対パスに変換して表示する
 	 * @param relativePath - 相対パス

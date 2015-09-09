@@ -22,7 +22,7 @@ public class Main extends Application {
 				stage.setScene(scene);
 				stage.show();
 			} else {
-				System.out.println("パスが間違っています");
+				System.out.println("wrong pass");
 			}
 		} catch (IOException e) {
 			ErrorUtil.getInstance().printLog(e);

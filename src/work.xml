@@ -1,45 +1,21 @@
 <?xml version="1.0"?>
 <root>
 	<work>
-		<name>作品名1</name>
+		<name>Name1</name>
 		<creator>製作者1</creator>
-		<image>works/Name1/image/image1.jpg,works/Name1/image/image5.jpg,works/Name1/image/image6.jpg</image>
 		<description>111111</description>
 		<path>Name1</path>
 	</work>
 	<work>
-		<name>作品名2</name>
+		<name>Name2</name>
 		<creator>製作者2</creator>
-		<image>works/Name2/image/image1.jpg,works/Name2/image/image2.jpg,works/Name2/image/image6.jpg</image>
 		<description>222222</description>
 		<path>Name2</path>
 	</work>
 	<work>
-		<name>作品名3</name>
+		<name>Name3</name>
 		<creator>製作者3</creator>
-		<image>works/Name3/image/image1.jpg,works/Name3/image/image2.jpg,works/Name3/image/image3.jpg</image>
 		<description>333333333</description>
 		<path>Name3</path>
-	</work>
-	<work>
-		<name>作品名4</name>
-		<creator>製作者4</creator>
-		<image>works/Name4/image/image2.jpg,works/Name4/image/image3.jpg,works/Name4/image/image4.jpg</image>
-		<description>44444444</description>
-		<path>Name4</path>
-	</work>
-	<work>
-		<name>作品名5</name>
-		<creator>製作者5</creator>
-		<image>works/Name5/image/image3.jpg,works/Name5/Image/image4.jpg,works/Name5/Image/image5.jpg</image>
-		<description>55555555</description>
-		<path>Name5</path>
-	</work>
-	<work>
-		<name>作品名6</name>
-		<creator>製作者6</creator>
-		<image>works/Name6/image/image4.jpg,works/Name6/image/image5.jpg,works/Name6/image/image6.jpg</image>
-		<description>66666666</description>
-		<path>Name6</path>
 	</work>
 </root>

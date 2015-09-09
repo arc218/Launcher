@@ -9,15 +9,17 @@ work.xmlは
 <work>-作品
 		<name>作品名</name>
 		<creator作成者</creator>
-		<image>サンプル画像のパス</image>
 		<description>作品の説明</description>
-		<path>作品のパス</path>
+		<path>ディレクトリ名</path>
 </work>
 のように記述する。
 
-作品名とパスが違うのは作品名にファイル名として用いることができない文字が含まれているかもしれないため。
+nameとpathが違うのは作品名にファイル名として用いることができない文字が含まれているかもしれないため。
+特に問題ない場合は同じ。
 
 サンプル画像は3枚とする。
-MenuController#initField()で変更可能
+MenuController#initField()#240あたりで追加可能
+
+src直下のworksはリソースファイルなので画像ファイルのみ格納する
 
 

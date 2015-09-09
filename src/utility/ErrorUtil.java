@@ -2,7 +2,6 @@ package utility;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -25,7 +24,7 @@ public class ErrorUtil {
 			if (fh != null) {
 				fh.setFormatter(new java.util.logging.XMLFormatter());
 				logger.addHandler(fh);
-				logger.log(Level.SEVERE, e.getClass().toString(), e);
+				//logger.log(Level.SEVERE, e.getClass().toString(), e);
 			}
 		} catch (SecurityException | IOException error) {
 			//このエラーが起きるとlogに出力できない

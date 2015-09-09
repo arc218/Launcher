@@ -1,5 +1,6 @@
 package application.scene.menu;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -59,7 +60,7 @@ public class MenuController implements Initializable {
 
 	private Element root;
 
-	private HashMap<Integer, HashMap<String, String>> hashMap;
+	private HashMap<Integer, HashMap<String, String>> dataMap;
 
 	private int pivot = 0;
 
@@ -113,9 +114,10 @@ public class MenuController implements Initializable {
 		//現在のディレクトリのパス
 		String currentDirectory = DataUtil.getCurrentDirectory();
 		//works直下のいずれかの作品名
-		String fileName = hashMap.get(pivot + 1).get("path");
+		String fileName = dataMap.get(pivot + 1).get("path");
 		//選択した作品のパス
-		String path = new StringBuilder(currentDirectory).append("/works/").append(fileName).toString();
+		String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
+				.toString();
 		ProcessBuilder processBuilder = new ProcessBuilder("open", path);
 		try {
 			Process process = processBuilder.start();
@@ -131,14 +133,14 @@ public class MenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		root = XMLUtil.getInstance().getRoot();
 
-		hashMap = new HashMap<Integer, HashMap<String, String>>();
+		dataMap = new HashMap<Integer, HashMap<String, String>>();
 
 		//ルート要素の子ノードを取得する
 		NodeList rootChildren = root.getChildNodes();
 		for (int i = 0; i < rootChildren.getLength(); i++) {
 			//i個目の作品情報を取得
 			Node node = rootChildren.item(i);
-			HashMap<String, String> dataMap = new HashMap<>();
+			HashMap<String, String> map = new HashMap<>();
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				Element element = (Element) node;
 				if (element.getNodeName().equals("work")) {
@@ -146,17 +148,17 @@ public class MenuController implements Initializable {
 					for (int j = 0; j < personChildren.getLength(); j++) {
 						Node personNode = personChildren.item(j);
 						if (personNode.getNodeType() == Node.ELEMENT_NODE) {
-							setData(personNode, dataMap, "name", "creator", "image", "description", "path");
+							setData(personNode, map, "name", "creator", "description", "path");
 						}
 					}
 				}
 			}
-			if (!dataMap.isEmpty()) {
-				hashMap.put((i / 2) + 1, dataMap);
+			if (!map.isEmpty()) {
+				dataMap.put((i / 2) + 1, map);
 			}
 		}
 
-		size = hashMap.size();
+		size = dataMap.size();
 		pivot = 0;
 		initField();
 		initKeyConfig();
@@ -209,7 +211,7 @@ public class MenuController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void initField() {
-		HashMap<String, String> map = hashMap.get(pivot + 1);
+		HashMap<String, String> map = dataMap.get(pivot + 1);
 		if (map != null) {
 			workName.setText("作品名:" + map.get("name"));
 			creatorName.setText("製作者:" + map.get("creator"));
@@ -255,19 +257,34 @@ public class MenuController implements Initializable {
 	/**
 	 * 対応する情報をHashMapに格納する
 	 */
-	private void setData(Node personNode, HashMap<String, String> dataMap, String... args) {
+	private void setData(Node personNode, HashMap<String, String> map, String... args) {
 		for (String name : args) {
 			if (personNode.getNodeName().equals(name)) {
-				dataMap.put(name, personNode.getTextContent());
 
 				if (personNode.getNodeName().equals("name")) {
 					listRecords.add(personNode.getTextContent());
-					/*TODO:nameが分かった段階でディレクトリがわかるので、works/name/Imgaeの中身をカンマ区切りで取得してdataMap.put("image", getItems);に変更する
-					 なのでsetData(...)呼び出し時のimageは消してよい work.xmlのimageタグも消して良い
-					 */
-				}
-				if (personNode.getNodeName().equals("image")) {
 					//TODO:全部の作品の画像数があっているかの確認(フィールドにパラメータを設置して対応してもよい)
+
+					//現在のディレクトリのパス
+					String currentDirectory = DataUtil.getCurrentDirectory();
+					//選択した作品のパス
+					String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME)
+							.add(personNode.getTextContent()).add("sample").toString();
+
+					//					URL resourceAsStream = this.getClass().getResource(path);
+					//					File file = new File(resourceAsStream.toURI());
+
+					File[] list = new File(path).listFiles();
+					StringJoiner joiner = new StringJoiner(",");
+					for (File fileName : list) {
+						joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+								.add(personNode.getTextContent()).add("sample")
+								.add(fileName.getName()).toString());
+					}
+					map.put(name, personNode.getTextContent());
+					map.put("image", joiner.toString());
+				} else {
+					map.put(name, personNode.getTextContent());
 				}
 			}
 		}
