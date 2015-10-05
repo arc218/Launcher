@@ -22,4 +22,6 @@ MenuController#initField()#240あたりで追加可能
 
 src直下のworksはリソースファイルなので画像ファイルのみ格納する
 
+StringUtil#LAUNCHER_NAMEで画面左上のタイトル変更
+
 

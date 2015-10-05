@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
@@ -267,22 +268,41 @@ public class MenuController implements Initializable {
 
 					//現在のディレクトリのパス
 					String currentDirectory = DataUtil.getCurrentDirectory();
+
 					//選択した作品のパス
 					String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME)
 							.add(personNode.getTextContent()).add("sample").toString();
 
-					//					URL resourceAsStream = this.getClass().getResource(path);
-					//					File file = new File(resourceAsStream.toURI());
+					//選択した作品のパス
+					//					String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME)
+					//							.add(personNode.getTextContent()).add("sample").toString();
+
+					//					Path path2;
+					//					path2 = Paths.get(new File("").getAbsoluteFile().toURI());
+					//					try (Stream<Path> stream = Files.list(path2)) {
+					//						StringJoiner stringJoiner = new StringJoiner(",");
+					//						stream
+					//								.filter(entry -> entry.getFileName().toString().endsWith("works"))
+					//								.forEach(System.out::println);
+					//					} catch (IOException e) {
+					//						// TODO Auto-generated catch block
+					//						e.printStackTrace();
+					//					}
 
 					File[] list = new File(path).listFiles();
 					StringJoiner joiner = new StringJoiner(",");
-					for (File fileName : list) {
-						joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
-								.add(personNode.getTextContent()).add("sample")
-								.add(fileName.getName()).toString());
+					if (!Objects.isNull(list)) {
+						for (File fileName : list) {
+							joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+									.add(personNode.getTextContent()).add("sample")
+									.add(fileName.getName()).toString());
+						}
+						map.put("image", joiner.toString());
+					} else {
+						System.out.println("pass miss");
 					}
 					map.put(name, personNode.getTextContent());
-					map.put("image", joiner.toString());
+					//TODO:名前は外部,画像は内部(内部に統一)
 				} else {
 					map.put(name, personNode.getTextContent());
 				}

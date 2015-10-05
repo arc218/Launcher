@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
@@ -45,6 +46,10 @@ public class MenuController implements Initializable {
 	/** 作品の説明 */
 	@FXML
 	private Text descriptionText;
+
+	/** タイトル */
+	@FXML
+	private Text title;
 
 	/** 開くボタン */
 	@FXML
@@ -163,11 +168,14 @@ public class MenuController implements Initializable {
 		initField();
 		initKeyConfig();
 		initListView();
+
 		//画面サイズの設定
 		imageView.setPreserveRatio(true);
 		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
 		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
 
+		//TODO:ラベルの内容,フォントの指定などを関数化
+		title.setText(StringUtil.LAUNCHER_NAME);
 		if (PlatformUtil.isMac()) {
 			descriptionText.setFont(Font.font("YuGothic"));
 		} else if (PlatformUtil.isWindows()) {
@@ -218,15 +226,17 @@ public class MenuController implements Initializable {
 			String descriptionValue = map.get("description");
 			int limit = 30;//1行に何文字まで表示するか
 			if (descriptionValue.length() < limit) {
-				descriptionText.setText(descriptionValue);
+				descriptionText.setText("	" + descriptionValue);
 			} else {
 				String crlf = System.getProperty("line.separator");
 				StringJoiner joiner = new StringJoiner(crlf);
 				for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
 					joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
 				}
-				descriptionText.setText(joiner.toString());
+				descriptionText.setText("	" + joiner.toString());
 			}
+
+			//TODO:関数化(lengthを用いて画像数の変化に対応できるように)
 
 			//画像のパスを分割
 			String[] split = map.get("image").split(",");
@@ -267,22 +277,25 @@ public class MenuController implements Initializable {
 
 					//現在のディレクトリのパス
 					String currentDirectory = DataUtil.getCurrentDirectory();
+
 					//選択した作品のパス
 					String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME)
 							.add(personNode.getTextContent()).add("sample").toString();
 
-					//					URL resourceAsStream = this.getClass().getResource(path);
-					//					File file = new File(resourceAsStream.toURI());
-
 					File[] list = new File(path).listFiles();
 					StringJoiner joiner = new StringJoiner(",");
-					for (File fileName : list) {
-						joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
-								.add(personNode.getTextContent()).add("sample")
-								.add(fileName.getName()).toString());
+					if (!Objects.isNull(list)) {
+						for (File fileName : list) {
+							joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+									.add(personNode.getTextContent()).add("sample")
+									.add(fileName.getName()).toString());
+						}
+						map.put("image", joiner.toString());
+					} else {
+						System.out.println("image pass is wrong");
 					}
 					map.put(name, personNode.getTextContent());
-					map.put("image", joiner.toString());
+					//TODO:名前は外部,画像は内部(内部に統一したほうがいい)
 				} else {
 					map.put(name, personNode.getTextContent());
 				}
