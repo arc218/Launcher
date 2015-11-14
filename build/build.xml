@@ -87,7 +87,7 @@
 		</fx:resources>
 	
 		<fx:application id="fxApplication"
-			name="Launcher"
+			name="TBNCollection"
 			mainClass="application.Main"
 		/>
 	
@@ -103,7 +103,7 @@
 	
 			<manifest>
 				<attribute name="Implementation-Vendor" value="arc"/>
-				<attribute name="Implementation-Title" value="Launcher"/>
+				<attribute name="Implementation-Title" value="TBNCollection"/>
 				<attribute name="Implementation-Version" value="0"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>

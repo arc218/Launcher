@@ -45,4 +45,6 @@ public class StringUtil {
 	/** 画像の高さ */
 	public static final int IMAGE_HEIGHT = 300;
 
+	/**	 ランチャー名 */
+	public static final String LAUNCHER_NAME = "TBNCollection2015";
 }

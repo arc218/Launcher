@@ -1,19 +1,20 @@
 <?xml version="1.0"?>
 <root>
 	<work>
-		<name>Name1</name>
+		<title>Name1</title>
 		<creator>製作者1</creator>
-		<description>111111</description>
+		<description>111111
+		aa</description>
 		<path>Name1</path>
 	</work>
 	<work>
-		<name>Name2</name>
+		<title>Name2</title>
 		<creator>製作者2</creator>
 		<description>222222</description>
 		<path>Name2</path>
 	</work>
 	<work>
-		<name>Name3</name>
+		<title>Name3</title>
 		<creator>製作者3</creator>
 		<description>333333333</description>
 		<path>Name3</path>

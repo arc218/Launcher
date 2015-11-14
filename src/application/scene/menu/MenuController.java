@@ -1,6 +1,7 @@
 package application.scene.menu;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -90,7 +91,7 @@ public class MenuController implements Initializable {
 			pivot = (pivot + size - 1) % size;
 			listView.getSelectionModel().select(pivot + 1);
 		}
-		initField();
+		setField();
 	}
 
 	@FXML
@@ -104,7 +105,7 @@ public class MenuController implements Initializable {
 	private void changeUnderFile() {
 		pivot = (pivot + 1) % size;
 		listView.getSelectionModel().select(pivot - 1);
-		initField();
+		setField();
 	}
 
 	@FXML
@@ -123,7 +124,12 @@ public class MenuController implements Initializable {
 		//選択した作品のパス
 		String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
 				.toString();
-		ProcessBuilder processBuilder = new ProcessBuilder("open", path);
+		//pathをエスケープするべき
+		String command = "explorer";
+		if (PlatformUtil.isMac()) {
+			command = "open";
+		}
+		ProcessBuilder processBuilder = new ProcessBuilder(command, path);
 		try {
 			Process process = processBuilder.start();
 			process.waitFor();
@@ -153,7 +159,7 @@ public class MenuController implements Initializable {
 					for (int j = 0; j < personChildren.getLength(); j++) {
 						Node personNode = personChildren.item(j);
 						if (personNode.getNodeType() == Node.ELEMENT_NODE) {
-							setData(personNode, map, "name", "creator", "description", "path");
+							setData(personNode, map, "title", "creator", "description", "path");
 						}
 					}
 				}
@@ -165,7 +171,7 @@ public class MenuController implements Initializable {
 
 		size = dataMap.size();
 		pivot = 0;
-		initField();
+		setField();
 		initKeyConfig();
 		initListView();
 
@@ -174,7 +180,6 @@ public class MenuController implements Initializable {
 		imageView.setFitHeight(StringUtil.IMAGE_HEIGHT);
 		imageView.setFitWidth(StringUtil.IMAGE_WIDTH);
 
-		//TODO:ラベルの内容,フォントの指定などを関数化
 		title.setText(StringUtil.LAUNCHER_NAME);
 		if (PlatformUtil.isMac()) {
 			descriptionText.setFont(Font.font("YuGothic"));
@@ -194,7 +199,7 @@ public class MenuController implements Initializable {
 				openDirectory();
 			} else {
 				pivot = listView.getSelectionModel().getSelectedIndex();
-				initField();
+				setField();
 			}
 		});
 	}
@@ -218,63 +223,73 @@ public class MenuController implements Initializable {
 	/**
 	 * Fieldの初期化
 	 */
-	private void initField() {
+	private void setField() {
 		HashMap<String, String> map = dataMap.get(pivot + 1);
 		if (map != null) {
-			workName.setText("作品名:" + map.get("name"));
+			workName.setText("作品名:" + map.get("title"));
 			creatorName.setText("製作者:" + map.get("creator"));
 			String descriptionValue = map.get("description");
-			int limit = 30;//1行に何文字まで表示するか
-			if (descriptionValue.length() < limit) {
-				descriptionText.setText("	" + descriptionValue);
-			} else {
-				String crlf = System.getProperty("line.separator");
-				StringJoiner joiner = new StringJoiner(crlf);
-				for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
-					joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
-				}
-				descriptionText.setText("	" + joiner.toString());
-			}
-
-			//TODO:関数化(lengthを用いて画像数の変化に対応できるように)
+			formatDescriptionText(descriptionValue);
 
 			//画像のパスを分割
 			String[] split = map.get("image").split(",");
-			imageView.setImage(new Image(split[0]));
-
-			//すでにアニメーションが行われていた場合削除する
-			if (timeline != null) {
-				timeline.stop();
-			}
-
-			timeline = new Timeline(new KeyFrame(new Duration(1000), event -> {
-				imageView.setImage(new Image(split[1]));
-			}), new KeyFrame(new Duration(2000), event -> {
-				imageView.setImage(new Image(split[2]));
-			}), new KeyFrame(new Duration(3000), event -> {
-				imageView.setImage(new Image(split[0]));
-			}));
-			//アニメーションの無限ループ
-			timeline.setCycleCount(Timeline.INDEFINITE);
-			timeline.play();
+			startImageAnimation(split);
 		} else {
-			System.out.println("error:" + pivot);
+			ErrorUtil.getInstance().printLog(new FileNotFoundException());
 			//			再現方法:1にカーソルがあるが、実際は6が表示されているときに6を開き、その後下に行こうとすると発生する
 			//			対策として最初から最後に移動できないようにした
 		}
 	}
 
 	/**
+	 * 引数の画像名から画像を取得し、アニメーションを開始する
+	 * @param split - 画像名の配列
+	 */
+	private void startImageAnimation(String[] split) {
+		imageView.setImage(new Image(split[split.length - 1]));
+		//すでにアニメーションが行われていた場合削除する
+		if (timeline != null) {
+			timeline.stop();
+		}
+		int count = 0;
+		timeline = new Timeline();
+		for (String str : split) {
+			timeline.getKeyFrames().add(new KeyFrame(new Duration((++count) * 1000), event -> {
+				imageView.setImage(new Image(str));
+			}));
+		}
+		//アニメーションの無限ループ
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
+	}
+
+	/**
+	 * ゲーム説明のテキストを適切な長さにフォーマットする
+	 * @param descriptionValue - 変換前のテキスト
+	 */
+	private void formatDescriptionText(String descriptionValue) {
+		int limit = 30;//1行に何文字まで表示するか
+		if (descriptionValue.length() < limit) {
+			descriptionText.setText("	" + descriptionValue);
+		} else {
+			String crlf = System.getProperty("line.separator");
+			StringJoiner joiner = new StringJoiner(crlf);
+			for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
+				joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
+			}
+			descriptionText.setText("	" + joiner.toString());
+		}
+	}
+
+	/**
 	 * 対応する情報をHashMapに格納する
+	 * @param personNode - 処理対処のノード
 	 */
 	private void setData(Node personNode, HashMap<String, String> map, String... args) {
 		for (String name : args) {
 			if (personNode.getNodeName().equals(name)) {
-
-				if (personNode.getNodeName().equals("name")) {
+				if (personNode.getNodeName().equals("title")) {
 					listRecords.add(personNode.getTextContent());
-					//TODO:全部の作品の画像数があっているかの確認(フィールドにパラメータを設置して対応してもよい)
-
 					//現在のディレクトリのパス
 					String currentDirectory = DataUtil.getCurrentDirectory();
 
@@ -292,7 +307,7 @@ public class MenuController implements Initializable {
 						}
 						map.put("image", joiner.toString());
 					} else {
-						System.out.println("image pass is wrong");
+						ErrorUtil.getInstance().printLog(new FileNotFoundException());
 					}
 					map.put(name, personNode.getTextContent());
 					//TODO:名前は外部,画像は内部(内部に統一したほうがいい)
@@ -302,5 +317,4 @@ public class MenuController implements Initializable {
 			}
 		}
 	}
-
 }

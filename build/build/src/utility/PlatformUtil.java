@@ -25,4 +25,7 @@ public class PlatformUtil {
 		return osName.startsWith("windows");
 	}
 
+	public static String getSeparator() {
+		return System.getProperty("file.separator");
+	}
 }
