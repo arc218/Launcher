@@ -122,7 +122,8 @@ public class MenuController implements Initializable {
 		//works直下のいずれかの作品名
 		String fileName = dataMap.get(pivot + 1).get("path");
 		//選択した作品のパス
-		String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
+		String path = new StringJoiner(PlatformUtil.getSeparator()).add(currentDirectory)
+				.add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
 				.toString();
 		//pathをエスケープするべき
 		String command = "explorer";
