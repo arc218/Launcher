@@ -47,4 +47,14 @@ public class StringUtil {
 
 	/**	 ランチャー名 */
 	public static final String LAUNCHER_NAME = "TBNCollection2015";
+
+	/** スクリーンショットファイル名*/
+	public static final String SCREENSHOT_PATH = "Screenshot";
+
+	/**
+	 * 引数の文字列から空白文字を取り除いて返す
+	 */
+	public static String removeSpace(String regex) {
+		return regex.replaceAll("[ 　]", "");
+	}
 }

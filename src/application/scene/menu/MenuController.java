@@ -120,7 +120,7 @@ public class MenuController implements Initializable {
 		//現在のディレクトリのパス
 		String currentDirectory = DataUtil.getCurrentDirectory();
 		//works直下のいずれかの作品名
-		String fileName = dataMap.get(pivot + 1).get("path");
+		String fileName = dataMap.get(pivot + 1).get("title");
 		//選択した作品のパス
 		String path = new StringJoiner(PlatformUtil.getSeparator()).add(currentDirectory)
 				.add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
@@ -165,6 +165,21 @@ public class MenuController implements Initializable {
 					}
 				}
 			}
+			if (!map.isEmpty()) {
+				String workPath = map.get("path");
+				String[] split = map.get("image").split(",");
+				StringJoiner joiner = new StringJoiner(",");
+				for (String fileName : split) {
+					joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME).add(workPath)
+							.add(StringUtil.SCREENSHOT_PATH).add(fileName).toString());
+				}
+				map.put("image", joiner.toString());
+			}
+
+			//			joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+			//									.add(personNode.getTextContent()).add(StringUtil.SCREENSHOT_PATH)
+			//									.add(fileName.getName()).toString());
+
 			if (!map.isEmpty()) {
 				dataMap.put((i / 2) + 1, map);
 			}
@@ -247,7 +262,11 @@ public class MenuController implements Initializable {
 	 * @param split - 画像名の配列
 	 */
 	private void startImageAnimation(String[] split) {
-		imageView.setImage(new Image(split[split.length - 1]));
+		//imageView.setImage(new Image(split[split.length - 1]));
+		System.out.println(split[split.length - 1].replaceAll("[ 　]", ""));
+		imageView.setImage(new Image(split[split.length - 1], StringUtil.SCENE_WIDTH,
+				StringUtil.SCENE_HEIGHT, false,
+				true));
 		//すでにアニメーションが行われていた場合削除する
 		if (timeline != null) {
 			timeline.stop();
@@ -256,7 +275,9 @@ public class MenuController implements Initializable {
 		timeline = new Timeline();
 		for (String str : split) {
 			timeline.getKeyFrames().add(new KeyFrame(new Duration((++count) * 1000), event -> {
-				imageView.setImage(new Image(str));
+				imageView.setImage(
+						new Image(str, StringUtil.SCENE_WIDTH, StringUtil.SCENE_HEIGHT, false,
+								true));
 			}));
 		}
 		//アニメーションの無限ループ
@@ -269,17 +290,18 @@ public class MenuController implements Initializable {
 	 * @param descriptionValue - 変換前のテキスト
 	 */
 	private void formatDescriptionText(String descriptionValue) {
-		int limit = 30;//1行に何文字まで表示するか
-		if (descriptionValue.length() < limit) {
-			descriptionText.setText("	" + descriptionValue);
-		} else {
-			String crlf = System.getProperty("line.separator");
-			StringJoiner joiner = new StringJoiner(crlf);
-			for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
-				joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
-			}
-			descriptionText.setText("	" + joiner.toString());
-		}
+		//		int limit = 30;//1行に何文字まで表示するか
+		//		if (descriptionValue.length() < limit) {
+		//			descriptionText.setText(descriptionValue);
+		//		} else {
+		//			String crlf = System.getProperty("line.separator");
+		//			StringJoiner joiner = new StringJoiner(crlf);
+		//			for (int i = 0; limit * i + limit < descriptionValue.length(); i++) {
+		//				joiner.add(descriptionValue.substring(limit * i, limit * i + limit));
+		//			}
+		//			descriptionText.setText(joiner.toString());
+		//		}
+		descriptionText.setText(descriptionValue);
 	}
 
 	/**
@@ -289,33 +311,52 @@ public class MenuController implements Initializable {
 	private void setData(Node personNode, HashMap<String, String> map, String... args) {
 		for (String name : args) {
 			if (personNode.getNodeName().equals(name)) {
+				System.out.println(name);
+				map.put(name, personNode.getTextContent());
 				if (personNode.getNodeName().equals("title")) {
+					//Listにタイトルをセット
 					listRecords.add(personNode.getTextContent());
 					//現在のディレクトリのパス
 					String currentDirectory = DataUtil.getCurrentDirectory();
 
 					//選択した作品のパス
 					String path = new StringJoiner("/").add(currentDirectory).add(StringUtil.WORK_DIRECTORY_NAME)
-							.add(personNode.getTextContent()).add("sample").toString();
+							.add(personNode.getTextContent()).add(StringUtil.SCREENSHOT_PATH).toString();
 
 					File[] list = new File(path).listFiles();
 					StringJoiner joiner = new StringJoiner(",");
 					if (!Objects.isNull(list)) {
 						for (File fileName : list) {
-							joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
-									.add(personNode.getTextContent()).add("sample")
-									.add(fileName.getName()).toString());
+							//							joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+							//									.add(personNode.getTextContent()).add(StringUtil.SCREENSHOT_PATH)
+							//									.add(fileName.getName()).toString());
+							joiner.add(fileName.getName());
+							//ここを切り出して最後に"path"と組み合わせる
 						}
 						map.put("image", joiner.toString());
 					} else {
 						ErrorUtil.getInstance().printLog(new FileNotFoundException());
 					}
-					map.put(name, personNode.getTextContent());
 					//TODO:名前は外部,画像は内部(内部に統一したほうがいい)
-				} else {
-					map.put(name, personNode.getTextContent());
+				} else if (personNode.getNodeName().equals("path")) {
+					System.out.println("path1:" + map.get("path"));
+					//listRecords.add(personNode.getTextContent());
 				}
 			}
 		}
+		//		StringJoiner joiner = new StringJoiner(",");
+		//		System.out.println("path2:" + map.get("path"));
+		//		String workPath = map.get("path");
+		//		if (!Objects.isNull(list)) {
+		//			for (File fileName : list) {
+		//				joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME)
+		//						.add(workPath).add(StringUtil.SCREENSHOT_PATH)
+		//						.add(fileName.getName()).toString());
+		//				//ここを切り出して最後に"path"と組み合わせる
+		//			}
+		//			System.out.println("joiner:" + joiner.toString());
+		//			//map.put("image", joiner.toString());
+		//		}
+
 	}
 }
