@@ -15,6 +15,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) {
 		stage.setTitle(StringUtil.TITLE);
+		stage.setResizable(false);//画面サイズを変更させない
 		try {
 			AnchorPane root = FXMLLoader.load(this.getClass().getResource(StringUtil.ENTRY_PATH));
 			if (root != null) {
