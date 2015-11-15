@@ -24,4 +24,7 @@ src直下のworksはリソースファイルなので画像ファイルのみ格
 
 StringUtil#LAUNCHER_NAMEで画面左上のタイトル変更
 
+実際に操作するファイルは直下のworksに入れる
+スクリーンショットはScreenshotファイルに入れる
+作品名にJavaProjectに入れられない文字が含まれる場合は適当に加工してその文字をxmlのpathに指定する
 

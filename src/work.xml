@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
 	<work>
-		<title>Name1</title>
-		<creator>製作者1</creator>
-		<description>111111&#x0A;aa
-		</description>
-		<path>Name1</path>
-	</work>
-	<work>
-		<title>Name2</title>
-		<creator>製作者2</creator>
-		<description>222222</description>
-		<path>Name2</path>
-	</work>
-	<work>
-		<title>Name3</title>
-		<creator>製作者3</creator>
-		<description>333333333</description>
-		<path>Name3</path>
-	</work>
-	<work>
 		<title>CYBER TRIP 〜escape from the cyber city〜</title>
 		<creator>arc</creator>
 		<description>ユニティちゃんを動かす横スクロールアクションゲーム&#x0A;ファイルを回収しながらゴールを目指そう!
@@ -32,5 +13,12 @@
 		<description>落ちてくる果物を集めよう！&#x0A;傷んだ果物やばくだんは集めないように・・・
 		</description>
 		<path>フルーツキャッチ</path>
+	</work>
+	<work>
+		<title>Valentain's Explosion</title>
+		<creator>com</creator>
+		<description>落ち物パズルゲーム&#x0A;チョコレートの数だけ男子を配置して爆発させましょう。
+		</description>
+		<path>ValentainsExplosion</path>
 	</work>
 </root>
