@@ -14,20 +14,21 @@
     -fx-background-radius: 2.0em;
     -fx-border-radius: 2.0em;
     /** 色が強いので調整 or 画像化 */
-    -fx-background-color: #FFEBF7;
+    -fx-background-color: #FF57B1;
     -fx-border-width: 1.0px;
-    -fx-border-color: black;
+    /*-fx-border-color: black;*/
+     -fx-text-fill: white;
 }
 
 .button:hover {
-    -fx-background-color: #FFE3F4;
+    -fx-background-color: #CC0F75;
     /**blure-type color radius spread x-offset y-offset */
     -fx-effect: dropshadow(gaussian, black, 3, 0.01, 1, 1);
     -fx-border-color: none;
 }
 
 .button:pressed {
-    -fx-background-color: white;
+    -fx-background-color: #552D42;
 }
 
 .title-container{
@@ -57,7 +58,7 @@
 
 .list-view:focused .list-cell:filled:focused:selected {
    /* -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar; */
-   -fx-background-color: #FFEDE3 ;
+   -fx-background-color: #EDAB5B ;
     -fx-background-insets: 0, 1, 2;
     -fx-background: -fx-accent;
     -fx-text-fill: black;
