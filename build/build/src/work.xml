@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
 	<work>
-		<title>CYBER TRIP 〜escape from the cyber city〜</title>
-		<creator>arc</creator>
-		<description>ユニティちゃんを動かす横スクロールアクションゲーム&#x0A;ファイルを回収しながらゴールを目指そう!&#x0A;ファイルを回収しながらゴールを目指そう!
-		</description>
-		<path>CYBERTRIP</path>
-	</work>
-	<work>
-		<title>フルーツキャッチ</title>
-		<creator>zac3</creator>
-		<description>落ちてくる果物を集めよう！&#x0A;傷んだ果物やばくだんは集めないように・・・
-		</description>
-		<path>フルーツキャッチ</path>
-	</work>
-	<work>
-		<title>Valentain's Explosion</title>
-		<creator>com</creator>
-		<description>落ち物パズルゲーム&#x0A;チョコレートの数だけ男子を配置して爆発させましょう。
-		</description>
-		<path>ValentainsExplosion</path>
-	</work>
-	<work>
 		<title>CaraCore ver3.0</title>
 		<creator>yuchu</creator>
 		<description>好きな色でプレイできる、カラフルなパズル系スコアアタックゲーム。
 		</description>
 		<path>CaraCore</path>
+	</work>
+	<work>
+		<title>巻きとれ!</title>
+		<creator>zac3</creator>
+		<description>dummy text
+		</description>
+		<path>rewind</path>
+	</work>
+	<work>
+		<title>ボブくんの冒険</title>
+		<creator>暴走研究員</creator>
+		<description>ボブくんを操作し、ジャンプやナイフ投げを駆使しつつひたすら右に進むゲームです。&#x0A;敵を倒したり、アイテムを取ったりすると得点になります。&#x0A;早くかつ安全にゴールまで行き、高得点を目指そう！
+		</description>
+		<path>bob</path>
 	</work>
 </root>
