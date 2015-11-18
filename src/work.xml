@@ -5,12 +5,12 @@
 		<creator>yuchu</creator>
 		<description>好きな色でプレイできる、カラフルなパズル系スコアアタックゲーム。
 		</description>
-		<path>CaraCore</path>
+		<path>caraCore</path>
 	</work>
 	<work>
 		<title>巻きとれ!</title>
-		<creator>zac3</creator>
-		<description>dummy text
+		<creator>zak3</creator>
+		<description>親方「ボタン連打で紙を巻き取るんだ。　見てくれはアレだが、ぜひやってみてくれ！」
 		</description>
 		<path>rewind</path>
 	</work>
@@ -20,5 +20,40 @@
 		<description>ボブくんを操作し、ジャンプやナイフ投げを駆使しつつひたすら右に進むゲームです。&#x0A;敵を倒したり、アイテムを取ったりすると得点になります。&#x0A;早くかつ安全にゴールまで行き、高得点を目指そう！
 		</description>
 		<path>bob</path>
+	</work>
+	<work>
+		<title>BioRhythm</title>
+		<creator>COM</creator>
+		<description>リズムに合わせて、敵を倒すSTGです。&#x0A;結構難しいです。
+		</description>
+		<path>bioRhythm</path>
+	</work>
+	<work>
+		<title>アンチ核家族化</title>
+		<creator>神御田</creator>
+		<description>一人ではできなくても誰かと一緒ならできることもある。&#x0A;そう…たとえ凶悪なモンスターを倒すことだって…
+		</description>
+		<path>anti</path>
+	</work>
+	<work>
+		<title>押すなよ！絶対！</title>
+		<creator>yumetodo</creator>
+		<description>日本は言霊の力が強い、不思議な国。&#x0A;ならば言霊で遊ぼうやないか！&#x0A;押すなよ！絶対！
+		</description>
+		<path>push</path>
+	</work>
+	<work>
+		<title>私は肥満なのだろうか？</title>
+		<creator>Gosho</creator>
+		<description>身長と体重を入力するとBMIの計算が行われ、&#x0A;瞬時に自身が肥満なのかそうではないのかがわかります。
+		</description>
+		<path>obesity</path>
+	</work>
+	<work>
+		<title>二輪無双</title>
+		<creator>たけ &amp; Gosho</creator>
+		<description>走って撃って走りまくる旧感覚アクションゲーム！
+		</description>
+		<path>matchless</path>
 	</work>
 </root>

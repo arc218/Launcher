@@ -171,7 +171,7 @@ public class MenuController implements Initializable {
 				StringJoiner joiner = new StringJoiner(",");
 				for (String fileName : split) {
 					joiner.add(new StringJoiner("/").add(StringUtil.WORK_DIRECTORY_NAME).add(workPath)
-							.add(StringUtil.SCREENSHOT_PATH).add(fileName).toString());
+							.add(fileName).toString());
 				}
 				map.put("image", joiner.toString());
 				dataMap.put((i / 2) + 1, map);
