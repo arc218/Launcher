@@ -1,3 +1,4 @@
 /bin/
 #作品ファイルに関しては管理しない
-build/dist/works/
+build/dist/
+build/dist/
