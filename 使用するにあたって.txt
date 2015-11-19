@@ -24,3 +24,4 @@ StringUtil#LAUNCHER_NAMEで画面左上のタイトル変更
 スクリーンショットはScreenshotファイルに入れる
 
 iava1.8がないと動きません
+必要なのはexe,jar,works
