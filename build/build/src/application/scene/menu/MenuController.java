@@ -82,7 +82,7 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * 一つ下のファイルに移動する
+	 * 一つ上のファイルに移動する
 	 */
 	private void changeOverFile() {
 		if (pivot == 0) {
@@ -100,11 +100,15 @@ public class MenuController implements Initializable {
 	}
 
 	/**
-	 * 一つ上のファイルに移動する
+	 * 一つ下のファイルに移動する
 	 */
 	private void changeUnderFile() {
-		pivot = (pivot + 1) % size;
-		listView.getSelectionModel().select(pivot - 1);
+		if (pivot == size - 1) {
+			listView.getSelectionModel().select(size);
+		} else {
+			pivot = (pivot + 1) % size;
+			listView.getSelectionModel().select(pivot - 1);
+		}
 		setField();
 	}
 
