@@ -68,49 +68,11 @@ public class MenuController implements Initializable {
 
 	private HashMap<Integer, HashMap<String, String>> dataMap;
 
-	private int pivot = 0;
-
 	private int size = 0;
 
 	private ObservableList<String> listRecords = FXCollections.observableArrayList();
 
 	private Timeline timeline;
-
-	@FXML
-	public void handleUp(ActionEvent event) {
-		changeOverFile();
-	}
-
-	/**
-	 * 一つ上のファイルに移動する
-	 */
-	private void changeOverFile() {
-		if (pivot == 0) {
-			listView.getSelectionModel().select(1);
-		} else {
-			pivot = (pivot + size - 1) % size;
-			listView.getSelectionModel().select(pivot + 1);
-		}
-		setField();
-	}
-
-	@FXML
-	public void handleDown(ActionEvent event) {
-		changeUnderFile();
-	}
-
-	/**
-	 * 一つ下のファイルに移動する
-	 */
-	private void changeUnderFile() {
-		if (pivot == size - 1) {
-			listView.getSelectionModel().select(size);
-		} else {
-			pivot = (pivot + 1) % size;
-			listView.getSelectionModel().select(pivot - 1);
-		}
-		setField();
-	}
 
 	@FXML
 	public void handleEnter(ActionEvent event) {
@@ -124,16 +86,31 @@ public class MenuController implements Initializable {
 		//現在のディレクトリのパス
 		String currentDirectory = DataUtil.getCurrentDirectory();
 		//works直下のいずれかの作品名
-		String fileName = dataMap.get(pivot + 1).get("title");
+		String fileName = dataMap.get(listView.getSelectionModel().getSelectedIndex()).get("title");
 		//選択した作品のパス
 		String path = new StringJoiner(PlatformUtil.getSeparator()).add(currentDirectory)
 				.add(StringUtil.WORK_DIRECTORY_NAME).add(fileName)
 				.toString();
+
 		//pathをエスケープするべき
 		String command = "explorer";
 		if (PlatformUtil.isMac()) {
 			command = "open";
 		}
+
+		//		try (DirectoryStream<Path> ds = Files.newDirectoryStream(Paths.get(path))) {
+		//			for (Path p : ds) {
+		//				System.out.println(p.toString().endsWith(".exe"));
+		//				if (p.toString().endsWith(".exe")) {
+		//					ProcessBuilder processBuilder = new ProcessBuilder(command, p.toString());
+		//					Process process = processBuilder.start();
+		//					process.waitFor();
+		//					process.destroy();
+		//				}
+		//			}
+		//		} catch (IOException | InterruptedException e) {
+		//			ErrorUtil.getInstance().printLog(e);
+		//		}
 		ProcessBuilder processBuilder = new ProcessBuilder(command, path);
 		try {
 			Process process = processBuilder.start();
@@ -150,13 +127,13 @@ public class MenuController implements Initializable {
 		root = XMLUtil.getInstance().getRoot();
 
 		dataMap = new HashMap<Integer, HashMap<String, String>>();
-
 		//ルート要素の子ノードを取得する
 		NodeList rootChildren = root.getChildNodes();
 		for (int i = 0; i < rootChildren.getLength(); i++) {
 			//i個目の作品情報を取得
 			Node node = rootChildren.item(i);
 			HashMap<String, String> map = new HashMap<>();
+			System.out.println(node.getNodeType());
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				Element element = (Element) node;
 				if (element.getNodeName().equals("work")) {
@@ -164,7 +141,7 @@ public class MenuController implements Initializable {
 					for (int j = 0; j < personChildren.getLength(); j++) {
 						Node personNode = personChildren.item(j);
 						if (personNode.getNodeType() == Node.ELEMENT_NODE) {
-							setData(personNode, map, "title", "creator", "description", "path");
+							setData(personNode, map);
 						}
 					}
 				}
@@ -183,10 +160,9 @@ public class MenuController implements Initializable {
 		}
 
 		size = dataMap.size();
-		pivot = 0;
-		setField();
-		initKeyConfig();
 		initListView();
+		initKeyConfig();
+		setField();
 
 		//画面サイズの設定
 		imageView.setPreserveRatio(true);
@@ -211,9 +187,12 @@ public class MenuController implements Initializable {
 			if (event.getClickCount() == 2) {
 				openDirectory();
 			} else {
-				pivot = listView.getSelectionModel().getSelectedIndex();
 				setField();
 			}
+		});
+
+		listView.getSelectionModel().selectedItemProperty().addListener(event -> {
+			setField();
 		});
 	}
 
@@ -225,10 +204,6 @@ public class MenuController implements Initializable {
 			KeyCode code = event.getCode();
 			if (KeyCode.ENTER.equals(code)) {
 				openDirectory();
-			} else if (KeyCode.DOWN.equals(code)) {
-				changeUnderFile();
-			} else if (KeyCode.UP.equals(code)) {
-				changeOverFile();
 			}
 		});
 	}
@@ -237,7 +212,7 @@ public class MenuController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void setField() {
-		HashMap<String, String> map = dataMap.get(pivot + 1);
+		HashMap<String, String> map = dataMap.get(listView.getSelectionModel().getSelectedIndex() + 1);
 		if (map != null) {
 			workName.setText("作品名:" + map.get("title"));
 			creatorName.setText("製作者:" + map.get("creator"));
@@ -259,7 +234,6 @@ public class MenuController implements Initializable {
 	 * @param split - 画像名の配列
 	 */
 	private void startImageAnimation(String[] split) {
-		//imageView.setImage(new Image(split[split.length - 1]));
 		imageView.setImage(new Image(split[split.length - 1], StringUtil.SCENE_WIDTH,
 				StringUtil.SCENE_HEIGHT, false,
 				true));
@@ -304,8 +278,9 @@ public class MenuController implements Initializable {
 	 * 対応する情報をHashMapに格納する
 	 * @param personNode - 処理対処のノード
 	 */
-	private void setData(Node personNode, HashMap<String, String> map, String... args) {
-		for (String name : args) {
+	private void setData(Node personNode, HashMap<String, String> map) {
+		String[] array = {"title", "creator", "description", "path"};
+		for (String name : array) {
 			if (personNode.getNodeName().equals(name)) {
 				map.put(name, personNode.getTextContent());
 				if (personNode.getNodeName().equals("title")) {
