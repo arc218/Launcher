@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
@@ -66,9 +68,7 @@ public class MenuController implements Initializable {
 
 	private Element root;
 
-	private HashMap<Integer, HashMap<String, String>> dataMap;
-
-	private int size = 0;
+	private List<HashMap<String, String>> dataMap;
 
 	private ObservableList<String> listRecords = FXCollections.observableArrayList();
 
@@ -125,15 +125,14 @@ public class MenuController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		root = XMLUtil.getInstance().getRoot();
-
-		dataMap = new HashMap<Integer, HashMap<String, String>>();
+		dataMap = new ArrayList<HashMap<String, String>>();
 		//ルート要素の子ノードを取得する
 		NodeList rootChildren = root.getChildNodes();
 		for (int i = 0; i < rootChildren.getLength(); i++) {
 			//i個目の作品情報を取得
 			Node node = rootChildren.item(i);
 			HashMap<String, String> map = new HashMap<>();
-			System.out.println(node.getNodeType());
+			//System.out.println(node.getNodeType());
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				Element element = (Element) node;
 				if (element.getNodeName().equals("work")) {
@@ -155,11 +154,10 @@ public class MenuController implements Initializable {
 							.add(fileName).toString());
 				}
 				map.put("image", joiner.toString());
-				dataMap.put((i / 2) + 1, map);
+				dataMap.add(map);
 			}
 		}
 
-		size = dataMap.size();
 		initListView();
 		initKeyConfig();
 		setField();
@@ -212,7 +210,7 @@ public class MenuController implements Initializable {
 	 * Fieldの初期化
 	 */
 	private void setField() {
-		HashMap<String, String> map = dataMap.get(listView.getSelectionModel().getSelectedIndex() + 1);
+		HashMap<String, String> map = dataMap.get(listView.getSelectionModel().getSelectedIndex());
 		if (map != null) {
 			workName.setText("作品名:" + map.get("title"));
 			creatorName.setText("製作者:" + map.get("creator"));
